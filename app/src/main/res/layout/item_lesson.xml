@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp">
+    android:layout_margin="8dp"
+    android:backgroundTint="@android:color/white"
+    android:elevation="4dp"
+    android:radius="12dp"
+    android:padding="12dp">
 
-    <Button
-        android:id="@+id/lessonButton"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:layout_marginBottom="2dp" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/lessonDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        android:paddingStart="8dp"
-        android:paddingBottom="8dp" />
-</LinearLayout>
+        <!-- Lesson button -->
+        <Button
+            android:id="@+id/lessonButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Lesson description -->
+        <TextView
+            android:id="@+id/lessonDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:lineSpacingExtra="2dp"
+            android:fontFamily="sans-serif" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

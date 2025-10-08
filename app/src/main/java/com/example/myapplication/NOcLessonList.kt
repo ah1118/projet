@@ -11,11 +11,9 @@ import java.io.File
 class NOcLessonList : AppCompatActivity() {
 
     private lateinit var lessonAdapter: NOcLessonAdapter
-    private lateinit var categoryRecycler: RecyclerView   // ✅ now a property
+    private lateinit var categoryRecycler: RecyclerView
     private val allLessons = mutableListOf<NOcLesson>()
     private val displayedLessons = mutableListOf<NOcLesson>()
-    private var currentIndex = 0
-    private val pageSize = 10
     private var selectedCategory: String = "All"
     private var highlightMode: String = "default" // "default", "auto", "manual"
     private val categories = mutableListOf<String>()
@@ -27,7 +25,7 @@ class NOcLessonList : AppCompatActivity() {
         setContentView(R.layout.activity_noc_lesson_list)
 
         val lessonRecycler = findViewById<RecyclerView>(R.id.lessonRecyclerView)
-        categoryRecycler = findViewById(R.id.categoryRecyclerView) // ✅ stored in property
+        categoryRecycler = findViewById(R.id.categoryRecyclerView)
 
         // Lessons adapter
         lessonAdapter = NOcLessonAdapter(displayedLessons)
@@ -39,11 +37,13 @@ class NOcLessonList : AppCompatActivity() {
         if (!jsonString.isNullOrEmpty()) {
             parseJson(jsonString)
 
-            // ✅ use setupCategoryButtons here
+            // Setup category buttons
             setupCategoryButtons()
 
-            // Load first 10 lessons initially
-            loadMoreLessons()
+            // ✅ Default: select "All" and show all lessons
+            selectedCategory = "All"
+            highlightMode = "manual"
+            showAllLessons()
         }
 
         // Setup BottomNavigation
@@ -94,7 +94,7 @@ class NOcLessonList : AppCompatActivity() {
             categories,
             { selectedCategory },
             { highlightMode },
-            { visibleCategories },   // ✅ now works
+            { visibleCategories },
         ) { clickedCategory ->
             if (clickedCategory == "All") {
                 isAllMode = true
@@ -126,7 +126,7 @@ class NOcLessonList : AppCompatActivity() {
             val courses = json.getJSONObject("courses")
             val keys = courses.keys()
 
-            categories.add("All") // 👈 Add this at the beginning
+            categories.add("All") // 👈 Always add "All" first
 
             while (keys.hasNext()) {
                 val category = keys.next()
@@ -148,18 +148,8 @@ class NOcLessonList : AppCompatActivity() {
         }
     }
 
-    private fun loadMoreLessons() {
-        val next = (currentIndex + pageSize).coerceAtMost(allLessons.size)
-        if (currentIndex < next) {
-            displayedLessons.addAll(allLessons.subList(currentIndex, next))
-            lessonAdapter.notifyDataSetChanged()
-            currentIndex = next
-        }
-    }
-
     private fun filterLessonsByCategory(category: String) {
         displayedLessons.clear()
-        currentIndex = 0
         selectedCategory = category
 
         val filtered = allLessons.filter { it.category == category }
@@ -171,11 +161,10 @@ class NOcLessonList : AppCompatActivity() {
     private fun showAllLessons() {
         isAllMode = true
         displayedLessons.clear()
-        currentIndex = 0
         selectedCategory = "All"
         highlightMode = "manual"
 
-        // 👉 Show all lessons at once
+        // ✅ Show all lessons at once
         displayedLessons.addAll(allLessons)
 
         lessonAdapter.notifyDataSetChanged()

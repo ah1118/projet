@@ -47,8 +47,11 @@ class NOdLessonPractice : AppCompatActivity() {
                         )
                     }
 
-                    // Show fragment
-                    val fragment = NOdDefinition.newInstance(vocabularyList)
+                    // ✅ Get Messages JSON
+                    val messages = lesson.getJSONObject("Messages")
+
+                    // ✅ Pass both vocab + messages into the fragment
+                    val fragment = NOdDefinition.newInstance(vocabularyList, messages)
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainer, fragment)
                         .commit()
