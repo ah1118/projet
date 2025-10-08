@@ -13,7 +13,7 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [NOdQuiz.newInstance] factory method to
+ * Use the [NOdQuiz.newInstance] factory method too
  * create an instance of this fragment.
  */
 class NOdQuiz : Fragment() {
